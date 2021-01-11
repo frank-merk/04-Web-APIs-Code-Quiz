@@ -1,0 +1,22 @@
+$grid-gutter-width: 300px;
+
+.col-md {
+    padding: 0px auto;
+
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+.highscores {
+    position: fixed;
+    left: 5;
+    top: 5;
+}
+
+.timer {
+    position: fixed;
+    right: 5;
+    top: 5;
+}

@@ -27,3 +27,30 @@ var quiz = [
     }
 ];
 
+var start = document.querySelector("#startbutton")
+var time = document.querySelector(".timer");
+var questionEl = document.querySelector("#questions");
+var conatinerEl = document.querySelector("#container");
+
+// We need a function that will generate quiz question html from that object array we declared earlier
+
+var qIndex = 0;
+function createQuizQuestions(qIndex){
+    var questionEl.innerHTML = "";
+    var optionsCreate = document.createElement("ul");
+    optionsCreate.innerHTML = ""
+    for (i = 0; i < quiz.length; i++) {
+        var questionNumber = quiz[qIndex].question;
+        var optionsList = options[qIndex].options;
+        questionEl.textContent = questionNumber;
+    }
+
+    optionsList.forEach(function (item) {
+        var choice = document.createElement("li")
+        choice.textContent = item;
+        questionEl.appendChild(optionsCreate);
+        optionsCreate.appendChild(choice);
+        choice.addEventListener("click", (checkAnswer));
+    }
+}
+
