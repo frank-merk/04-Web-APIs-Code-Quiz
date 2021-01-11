@@ -54,7 +54,7 @@ function createQuizQuestions(qIndex){
         questionEl.appendChild(optionsCreate);
         optionsCreate.appendChild(choice);
         // need to write a checker function that advances here
-        console.log(item)
+        console.log(item);
         
     });
 }
@@ -69,3 +69,5 @@ start.addEventListener("click", function() {
     createQuizQuestions(qIndex);
 });
 
+/* Pseudocode to finish and test:
+The first question is rendered right now. We want to create a condition where if the user clicks on an element, it checks that the text content of that element matches the answer of the corresponding question object. If it does, it puts some text on the page like "Correct, the answer is ___", and if it's wrong, we subtract 10 points from the score and write out "Wrong, the correct answer is ____". Clicking on a choice element does one of those two things, then increments the qIndex and calls the createQuizQuestions function again, but now it will write the next question, and so on (this should also clear the questions div id, but may need to test...i think the way I have it written it will just replace). Then there are two conditions to finish the quiz. Either they complete it, or the timer hits zero, and they are taken to a prompt screen to enter their high score which will right to local storage. They can view it via JSON stringify on a separate page.
