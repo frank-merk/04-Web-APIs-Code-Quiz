@@ -36,7 +36,7 @@ var conatinerEl = document.querySelector("#container");
 
 var qIndex = 0;
 function createQuizQuestions(qIndex){
-    var questionEl.innerHTML = "";
+    questionEl.textContent = "";
     var optionsCreate = document.createElement("ul");
     optionsCreate.innerHTML = ""
     for (i = 0; i < quiz.length; i++) {
@@ -51,6 +51,16 @@ function createQuizQuestions(qIndex){
         questionEl.appendChild(optionsCreate);
         optionsCreate.appendChild(choice);
         choice.addEventListener("click", (checkAnswer));
-    }
+    })
 }
+
+start.addEventListener("click", function() {
+    var timeRemaining = 75;
+    var wrongAnswer = 10;
+    setInterval(function () {
+        timeRemaining--;
+        time.textContent = "Time: " + timeRemaining;
+    }, 1000);
+    createQuizQuestions(qIndex);
+});
 

@@ -17,6 +17,6 @@ h1, h2 {
 
 .timer {
     position: fixed;
-    right: 5;
+    right: 0;
     top: 5;
 }
