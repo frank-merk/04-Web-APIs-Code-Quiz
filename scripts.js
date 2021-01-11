@@ -34,6 +34,8 @@ var conatinerEl = document.querySelector("#container");
 
 // We need a function that will generate quiz question html from that object array we declared earlier
 
+// Where qIndex is a position in the quiz array, we're going to move through each question object in the array, and render out the different parts of that object as html elements that display in the browser. 
+
 var qIndex = 0;
 function createQuizQuestions(qIndex){
     questionEl.textContent = "";
@@ -41,8 +43,9 @@ function createQuizQuestions(qIndex){
     optionsCreate.innerHTML = ""
     for (i = 0; i < quiz.length; i++) {
         var questionNumber = quiz[qIndex].question;
-        var optionsList = options[qIndex].options;
+        var optionsList = quiz[qIndex].options;
         questionEl.textContent = questionNumber;
+        console.log(questionNumber);
     }
 
     optionsList.forEach(function (item) {
@@ -50,8 +53,10 @@ function createQuizQuestions(qIndex){
         choice.textContent = item;
         questionEl.appendChild(optionsCreate);
         optionsCreate.appendChild(choice);
-        choice.addEventListener("click", (checkAnswer));
-    })
+        // need to write a checker function that advances here
+        console.log(item)
+        
+    });
 }
 
 start.addEventListener("click", function() {
