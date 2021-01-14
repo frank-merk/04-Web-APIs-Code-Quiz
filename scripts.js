@@ -30,7 +30,7 @@ var quiz = [
 var start = document.querySelector("#startbutton")
 var time = document.querySelector(".timer");
 var questionEl = document.querySelector("#questions");
-var conatinerEl = document.querySelector("#container");
+var timerInterval;
 
 // We need a function that will generate quiz question html from that object array we declared earlier
 
@@ -61,9 +61,9 @@ function createQuizQuestions(qIndex){
 
 var timeRemaining = 100;
 var wrongAnswer = 20; 
+
 start.addEventListener("click", function() {
-   
-    setInterval(function () {
+     setInterval(function () {
         timeRemaining--;
         time.textContent = "Time: " + timeRemaining;
     }, 1000);
@@ -86,22 +86,34 @@ function checkAnswer(event) {
         qIndex++;
         if (qIndex >= quiz.length) {
             endQuiz();
-            selectionDiv.textContent = "End of Quiz! Your score was" ;
             
         } else {
             createQuizQuestions(qIndex);
         } 
         questionEl.appendChild(selectionDiv);
     }
+
+var highscores = document.querySelector(".highscores");
+highscores.style.visibility = "hidden";
+
 function endQuiz() {
     questionEl.innerHTML = "";
     time.innerHTML = "";
 
-    var headline = document.createElement("h1")
-    headline.textContent = "You finished!"
+    var headline = document.createElement("h1");
+    headline.textContent = "You finished! Your score is " + timeRemaining + ". Enter your initials to log your score.";
 
+    
     questionEl.appendChild(headline);
+
+    var submitButton = document.createElement("button");
+    submitButton.textContent = "Submit";
+
+    questionEl.appendChild(submitButton);
 }
+
+
+
 
 /* Pseudocode to finish and test:
 The first question is rendered right now. We want to create a condition where if the user clicks on an element, it checks that the text content of that element matches the answer of the corresponding question object. If it does, it puts some text on the page like "Correct, the answer is ___", and if it's wrong, we subtract 10 points from the score and write out "Wrong, the correct answer is ____". Clicking on a choice element does one of those two things, then increments the qIndex and calls the createQuizQuestions function again, but now it will write the next question, and so on (this should also clear the questions div id, but may need to test...i think the way I have it written it will just replace). Then there are two conditions to finish the quiz. Either they complete it, or the timer hits zero, and they are taken to a prompt screen to enter their high score which will right to local storage. They can view it via JSON stringify on a separate page. */ 
