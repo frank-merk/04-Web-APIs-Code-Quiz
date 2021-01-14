@@ -102,7 +102,7 @@ function checkAnswer(event) {
         questionEl.appendChild(selectionDiv);
     }
 
-var highscores = document.querySelector(".highscores");
+var highscores = document.querySelector("#highscores");
 highscores.style.visibility = "hidden";
 
 function endQuiz() {
@@ -116,10 +116,35 @@ function endQuiz() {
     
     questionEl.appendChild(headline);
 
+    var initialsInput = document.createElement("input");
+    initialsInput.setAttribute = ("id", "initials");
+    
+    questionEl.appendChild(initialsInput);
+
     var submitButton = document.createElement("button");
     submitButton.textContent = "Submit";
-
+    submitButton.setAttribute("id", "submit")
     questionEl.appendChild(submitButton);
+
+    submitButton.addEventListener("click", function () {
+        var initials = initialsInput.value;
+        if (initials === null) {
+            console.log("Mystery Player");
+        } else {
+            var userData = {
+                initials: initials,
+                score: timeRemaining
+            };
+        }
+        var scoreList = localStorage.getItem("scoreList");
+        var latestScore = JSON.parse(allScores);
+        scoreList.push(userData);
+        localStorage.setItem("scoreList", latestScore);
+        questionEl.style.visibility = hidden;
+        highscores.style.visibility = visible;
+    });
+
+    
 }
 
 
