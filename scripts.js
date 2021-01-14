@@ -59,9 +59,10 @@ function createQuizQuestions(qIndex){
     });
 }
 
+var timeRemaining = 100;
+var wrongAnswer = 20; 
 start.addEventListener("click", function() {
-    var timeRemaining = 75;
-    var wrongAnswer = 10;
+   
     setInterval(function () {
         timeRemaining--;
         time.textContent = "Time: " + timeRemaining;
@@ -70,19 +71,36 @@ start.addEventListener("click", function() {
 });
 
 function checkAnswer(event) {
+
     var selection = event.target;
     var selectionDiv = document.createElement("div");
+    selectionDiv.innerHTML = ""
     if (selection.matches("li")) {
         if (selection.textContent === quiz[qIndex].answer) {
             selectionDiv.textContent = "Correct: The answer is " + quiz[qIndex].answer; 
-            var printThis = selectionDiv.textContent;
-            console.log(printThis);
         } else {
                 selectionDiv.textContent = "Wrong: The answer is " + quiz[qIndex].answer;
+                timeRemaining = timeRemaining - wrongAnswer;
             }
         }
         qIndex++;
-        createQuizQuestions(qIndex);
+        if (qIndex >= quiz.length) {
+            endQuiz();
+            selectionDiv.textContent = "End of Quiz! Your score was" ;
+            
+        } else {
+            createQuizQuestions(qIndex);
+        } 
+        questionEl.appendChild(selectionDiv);
+    }
+function endQuiz() {
+    questionEl.innerHTML = "";
+    time.innerHTML = "";
+
+    var headline = document.createElement("h1")
+    headline.textContent = "You finished!"
+
+    questionEl.appendChild(headline);
 }
 
 /* Pseudocode to finish and test:
