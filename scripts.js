@@ -61,12 +61,21 @@ function createQuizQuestions(qIndex){
 
 var timeRemaining = 100;
 var wrongAnswer = 20; 
+var timerInterval = 0;
 
 start.addEventListener("click", function() {
-     setInterval(function () {
-        timeRemaining--;
-        time.textContent = "Time: " + timeRemaining;
-    }, 1000);
+     if (timerInterval === 0) {
+        timerInterval = setInterval(function () {
+            timeRemaining--;
+            time.textContent = "Time: " + timeRemaining;
+
+                if (timeRemaining <= 0) {
+                clearInterval(timerInterval);
+                endQuiz();
+                time.textContent = "You ran out of time!"
+                }
+            }, 1000);
+        } 
     createQuizQuestions(qIndex);
 });
 
@@ -97,6 +106,7 @@ var highscores = document.querySelector(".highscores");
 highscores.style.visibility = "hidden";
 
 function endQuiz() {
+    clearInterval(timerInterval);
     questionEl.innerHTML = "";
     time.innerHTML = "";
 
