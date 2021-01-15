@@ -148,7 +148,7 @@ function endQuiz() {
         }
 
         questionEl.remove();
-        highScores.style.visibility = "hidden";
+        highScores.style.visibility = "visible";
 
         scoreList.push(userData);
         var newUser = JSON.stringify(scoreList);
@@ -156,7 +156,7 @@ function endQuiz() {
 
         for (i =0; i < scoreList.length; i++) {
             var newLine = document.createElement("li");
-            newLine.textContent = scoreList[i].initials + " " + scoreList[i].score;
+            newLine.textContent = "Initials: " + scoreList[i].initials + " " + "Score: " + scoreList[i].score;
             highscores.appendChild(newLine);
             }
         });
