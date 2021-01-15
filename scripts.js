@@ -17,7 +17,7 @@ var quiz = [
     },
     {
         question: "String values must be enclosed within ____ when being assigned to variables.",
-        options: ["commas", "curly brackets", "quotes", "parenthesis"],
+        options: ["commas", "curly brackets", "quotes", "parentheses"],
         answer: "quotes"
     },
     {
@@ -102,8 +102,8 @@ function checkAnswer(event) {
         questionEl.appendChild(selectionDiv);
     }
 
-var highscores = document.querySelector("#highscores");
-highscores.style.visibility = "hidden";
+var highScores = document.querySelector("#highscores");
+highScores.style.visibility = "hidden";
 
 function endQuiz() {
     clearInterval(timerInterval);
@@ -120,31 +120,46 @@ function endQuiz() {
     initialsInput.setAttribute = ("id", "initials");
     
     questionEl.appendChild(initialsInput);
+    
 
     var submitButton = document.createElement("button");
     submitButton.textContent = "Submit";
     submitButton.setAttribute("id", "submit")
     questionEl.appendChild(submitButton);
+    
 
     submitButton.addEventListener("click", function () {
+        
         var initials = initialsInput.value;
-        if (initials === null) {
-            console.log("Mystery Player");
-        } else {
-            var userData = {
+        console.log(initials);
+        
+        var userData = {
                 initials: initials,
                 score: timeRemaining
             };
-        }
-        var scoreList = localStorage.getItem("scoreList");
-        var latestScore = JSON.parse(allScores);
-        scoreList.push(userData);
-        localStorage.setItem("scoreList", latestScore);
-        questionEl.style.visibility = hidden;
-        highscores.style.visibility = visible;
-    });
 
-    
+        localStorage.setItem("userData", JSON.stringify(userData));
+        var scoreList = localStorage.getItem("scoreList");
+        
+        if (scoreList === null) {
+            scoreList = [];
+        } else {
+            scoreList = JSON.parse(scoreList);
+        }
+
+        questionEl.remove();
+        highScores.style.visibility = "hidden";
+
+        scoreList.push(userData);
+        var newUser = JSON.stringify(scoreList);
+        localStorage.setItem("scoreList", newUser);
+
+        for (i =0; i < scoreList.length; i++) {
+            var newLine = document.createElement("li");
+            newLine.textContent = scoreList[i].initials + " " + scoreList[i].score;
+            highscores.appendChild(newLine);
+            }
+        });
 }
 
 
