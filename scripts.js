@@ -129,8 +129,9 @@ function endQuiz() {
     questionEl.appendChild(submitButton);
     
 
-    submitButton.addEventListener("click", function () {
+    submitButton.addEventListener("click", function getScores () {
         
+        showHighScores();
         var initials = initialsInput.value;
         console.log(initials);
         
@@ -148,8 +149,7 @@ function endQuiz() {
             scoreList = JSON.parse(scoreList);
         }
 
-        questionEl.remove();
-        highScores.style.visibility = "visible";
+        
 
         scoreList.push(userData);
         var newUser = JSON.stringify(scoreList);
@@ -162,3 +162,32 @@ function endQuiz() {
             }
         });
 }
+
+
+var highScoresLink = document.querySelector(".highscores-link");
+highScoresLink.addEventListener("click", (showHighScores));
+
+function showHighScores () {
+    questionEl.remove();
+    highScores.style.visibility = "visible";
+    highScoresLink.remove();
+    var scoreList = localStorage.getItem("scoreList");
+        
+    if (scoreList === null) {
+        scoreList = [];
+        alert = "There are no scores to view";
+    } else {
+        scoreList = JSON.parse(scoreList);
+    }
+
+    for (i =0; i < scoreList.length; i++) {
+        var newLine = document.createElement("li");
+        newLine.textContent = "Initials: " + scoreList[i].initials + " " + "Score: " + scoreList[i].score;
+        highscores.appendChild(newLine);
+        }
+}
+
+var clearEl = document.querySelector("#clearscores");
+highScoresLink.addEventListener("click", function () {
+
+})
