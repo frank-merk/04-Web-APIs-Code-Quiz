@@ -8,16 +8,23 @@
     <title>Javascript Quiz</title>
 </head>
 <body>
-    <div class = "highscores link">View High Scores</div>
+    <div class = "container">
+    <div class = "highscores-link">View High Scores</div>
     <div class = "timer"></div>
-    <div class="row justify-content-center">
-    <main id = "questions" class="col-sm-8">
+    <div id = "questions" class="col-md">
         <h1>JavaScript Coding Quiz</h1>
         <p>Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!</p>
         <!-- Quiz starts running when they hit the button -->
         <button id ="startbutton">Start!</button>
-    </main>
-    <ul id = "highscores"></ul>
+    </div>
+    <div id = "highscores">
+
+        <ul id = "scoreslist"></ul>
+        <!-- clear the page and localstorage -->
+        <button id ="clearscores">Clear Scores</button>
+        <!-- Reload the page -->
+        <button id = "reload" onClick="window.location.reload();">Reload</button>
+    </div>
     </div>
     <script src="scripts.js"></script>
 </body>
