@@ -4,28 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <!-- Using a Bootstrap col for the main container -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Javascript Quiz</title>
 </head>
 <body>
-    <div class = "container">
-    <div class = "highscores-link"><a href ="#">View High Scores</a></div>
-    <div class = "timer"></div>
-    <div id = "questions" class="col-md">
-        <h1>JavaScript Coding Quiz</h1>
-        <p>Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!</p>
-        <!-- Quiz starts running when they hit the button -->
-        <button id ="startbutton">Start!</button>
+    <div class = "container col-sm-10">
+        <!-- Displays the high scores when clicked -->
+        <div class = "highscores-link"><a href ="#">View High Scores</a></div>
+        <!-- Populates the timer when they start the quiz -->
+        <div class = "timer"></div>
+        <!-- corresponds to questionEl in the js file. populated based on user choices -->
+        <div id = "questions" >
+            <h1>JavaScript Coding Quiz</h1>
+            <p>Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by twenty seconds!</p>
+            <!-- Quiz starts running when they hit the button -->
+            <button id ="startbutton">Start!</button>
+        </div>
+        <!-- hidden div that displays when the user either clicks the high score link or finishes the quiz -->
+        <div id = "highscores">
+            <h1>High Scores</h1>
+            <ul id = "scoreslist"></ul>
+            <!-- clear the page and localstorage -->
+            <button id ="clearscores">Clear Scores</button>
+            <!-- Reload the page -->
+            <button id = "reload" onClick="window.location.reload();">Reload</button>
+        </div>
     </div>
-    <div id = "highscores">
-        <h1>High Scores</h1>
-        <ul id = "scoreslist"></ul>
-        <!-- clear the page and localstorage -->
-        <button id ="clearscores">Clear Scores</button>
-        <!-- Reload the page -->
-        <button id = "reload" onClick="window.location.reload();">Reload</button>
-    </div>
-    </div>
+    <!-- loading JS here -->
     <script src="scripts.js"></script>
 </body>
 </html>

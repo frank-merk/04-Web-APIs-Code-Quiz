@@ -2,6 +2,7 @@ h1, h2 {
     text-align: center;
 }
 
+/* Making the buttons orange with black borders and white text */
 button {
     border: 2px solid black;
     color: white;
@@ -9,23 +10,25 @@ button {
 
 }
 
+/* Quick style for a text box for high score */
 input {
     margin-bottom: 20px;
     width: 50%;
     border: 1px solid lightgray;
 }
-ul {
 
-    padding: 0px;
+ul {
+    padding: 0px; /* overrides the default ul padding so the list displays center */
 }
 li {
     background-color: orange;
     margin-top: 10px;
     padding: 10px;
     color: white;
-    list-style: none;
+    list-style: none; /* no style markings for the list, just using <li> as organizing element */
 }
 
+/* Main content box */
 .container {
     margin: 30px;
     padding: 5px;
@@ -34,12 +37,14 @@ li {
     height: auto;
     border: 3px solid black;
 
+/* These ids point to the things we're manipulating with JS */    
 }
 #questions, #scoreslist {
     margin: auto;
     text-align: center;
-
 }
+
+/* Chimes in with the answer below the current question */
 
 #selectionDiv {
     border-top: 2px solid red;
@@ -48,6 +53,8 @@ li {
     color: grey;
 }
 
+
+/* Button that puts the user initials and score in localstorage onclick */
 #submit {
     background-color: orange;
     margin-top: 20px;
@@ -56,6 +63,8 @@ li {
     color: white;
 }
 
+
+/* Buttons on the score page */
 #clearscores, #reload {
     margin-top: 30px;
     background-color: lightcoral;

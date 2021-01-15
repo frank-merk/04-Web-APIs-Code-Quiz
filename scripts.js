@@ -27,10 +27,19 @@ var quiz = [
     }
 ];
 
-var start = document.querySelector("#startbutton")
-var time = document.querySelector(".timer");
-var questionEl = document.querySelector("#questions");
-var timerInterval;
+var start = document.querySelector("#startbutton"); // start button
+var highScoresLink = document.querySelector(".highscores-link"); // link in top left corner to view scores
+var questionEl = document.querySelector("#questions"); // main element that we're manipulating
+var highScores = document.querySelector("#highscores"); // the secondary element manipulated
+highScores.style.display = "none"; // hide that element for now
+var time = document.querySelector(".timer"); // empty element that starts counting down when they start the quiz
+var clearEl = document.querySelector("#clearscores"); // button the scores page that lets users clear old scores
+
+
+// clock related variables
+var timeRemaining = 100; // start the clock
+var wrongAnswer = 20; // points off, if wrong answer
+var timerInterval = 0; // empty timer interval we need to control clock elements
 
 // We need a function that will generate quiz question html from that object array we declared earlier
 
@@ -38,127 +47,130 @@ var timerInterval;
 
 var qIndex = 0;
 function createQuizQuestions(qIndex){
-    questionEl.textContent = "";
-    var optionsCreate = document.createElement("ul");
-    optionsCreate.innerHTML = ""
+    questionEl.textContent = ""; // empty question element to start with
+    var optionsCreate = document.createElement("ul"); // options will display in this list
+    optionsCreate.innerHTML = "" // starting from empty
     for (i = 0; i < quiz.length; i++) {
-        var questionNumber = quiz[qIndex].question;
-        var optionsList = quiz[qIndex].options;
-        questionEl.textContent = questionNumber;
-        console.log(questionNumber);
+        var questionNumber = quiz[qIndex].question; // question prompt
+        var optionsList = quiz[qIndex].options; // spits out the list of options
+        questionEl.textContent = questionNumber; // displays the question text
+        console.log(questionNumber); // for debugging
     }
-
+    // for each loop that takes each item in our options list, creates a list element for it, populates the html and appends to the options list
     optionsList.forEach(function (item) {
         var choice = document.createElement("li")
         choice.textContent = item;
         questionEl.appendChild(optionsCreate);
         optionsCreate.appendChild(choice);
-        choice.addEventListener("click", (checkAnswer));
-        console.log(item);
-        
+        choice.addEventListener("click", (checkAnswer)); // event listener checking for a correct response.
+        console.log(item); // debugging 
     });
 }
 
-var timeRemaining = 100;
-var wrongAnswer = 20; 
-var timerInterval = 0;
-
+// Clock functionality
 start.addEventListener("click", function() {
-     if (timerInterval === 0) {
+     if (timerInterval === 0) { // Set this at the beginning
         timerInterval = setInterval(function () {
-            timeRemaining--;
+            timeRemaining--; // countdown
             time.textContent = "Time: " + timeRemaining;
 
                 if (timeRemaining <= 0) {
-                clearInterval(timerInterval);
-                endQuiz();
+                clearInterval(timerInterval); // clears the timer
+                endQuiz(); // quiz is over, time's up
                 time.textContent = "You ran out of time!"
                 }
             }, 1000);
         } 
-    createQuizQuestions(qIndex);
+    createQuizQuestions(qIndex); // Renders the first quiz question
 });
 
 function checkAnswer(event) {
 
-    var selection = event.target;
+    var selection = event.target; // checks the user clicked on something
     var selectionDiv = document.createElement("div");
-    selectionDiv.setAttribute("id", "selectionDiv");
-    selectionDiv.innerHTML = ""
-    if (selection.matches("li")) {
-        if (selection.textContent === quiz[qIndex].answer) {
-            selectionDiv.textContent = "Correct: The answer is " + quiz[qIndex].answer; 
+    selectionDiv.setAttribute("id", "selectionDiv"); // logs what the user picked
+    selectionDiv.innerHTML = "" // setting this empty for now
+    if (selection.matches("li")) { // if they clicked list element...
+        if (selection.textContent === quiz[qIndex].answer) { // check the content agains the answer in the object
+            selectionDiv.textContent = "Correct: The answer is " + quiz[qIndex].answer; // if correct, tell em
         } else {
-                selectionDiv.textContent = "Wrong: The answer is " + quiz[qIndex].answer;
-                timeRemaining = timeRemaining - wrongAnswer;
+                selectionDiv.textContent = "Wrong: The answer is " + quiz[qIndex].answer; // tell them if they're wrong...
+                timeRemaining = timeRemaining - wrongAnswer; // and penalize
             }
         }
-        qIndex++;
+        qIndex++; // add to the question index
         if (qIndex >= quiz.length) {
-            endQuiz();
+            endQuiz(); // finish when we're out of questions
             selectionDiv.textContent = "Thanks for playing!";
             
         } else {
-            createQuizQuestions(qIndex);
+            createQuizQuestions(qIndex); // if there are more questions, keep going
         } 
         questionEl.appendChild(selectionDiv);
 
     }
-
-var highScores = document.querySelector("#highscores");
-highScores.style.display = "none";
-
+ // run down of stuff that happens when the quiz is over
 function endQuiz() {
+    // clear everything
     clearInterval(timerInterval);
     questionEl.innerHTML = "";
     time.innerHTML = "";
 
+    // score message
     var headline = document.createElement("h1");
     headline.textContent = "You finished! Your score is " + timeRemaining + ". Enter your initials to log your score.";
-
-    
     questionEl.appendChild(headline);
 
+    // box for user identification
     var initialsInput = document.createElement("input");
     initialsInput.setAttribute = ("id", "initials");
-    
     questionEl.appendChild(initialsInput);
+
+    // spacer
     var linebreak = document.createElement("br");
     questionEl.appendChild(linebreak);
 
+    // create the submit button
     var submitButton = document.createElement("button");
     submitButton.textContent = "Submit";
     submitButton.setAttribute("id", "submit")
     questionEl.append(submitButton);
     
-
+    //when the user clicks submit...
     submitButton.addEventListener("click", function getScores () {
         
+        // take them to the high score page
         showHighScores();
+        // store their initials
         var initials = initialsInput.value;
-        console.log(initials);
+        console.log(initials); //debugging
         
-        
+        // object with user data
         var userData = {
                 initials: initials,
                 score: timeRemaining
             };
 
+        // store that data, and stringify it so we can use it later
         localStorage.setItem("userData", JSON.stringify(userData));
+        // look for existing scores
         var scoreList = localStorage.getItem("scoreList");
         
+        // if they don't exist...
         if (scoreList === null) {
+            //make them.
             scoreList = [];
         } else {
+            //otherwise, parse out the scorelist array
             scoreList = JSON.parse(scoreList);
         }
 
-        
-
+        // add the users score to the array
         scoreList.push(userData);
         var newUser = JSON.stringify(scoreList);
         localStorage.setItem("scoreList", newUser);
 
+        // go through that array and make a list item for each name in it, and display it on the page
         for (i =0; i < scoreList.length; i++) {
             var newLine = document.createElement("li");
             newLine.innerHTML = "Initials: " + scoreList[i].initials + "<br />" + "Score: " + scoreList[i].score;
@@ -167,9 +179,10 @@ function endQuiz() {
         });
 }
 
-var highScoresLink = document.querySelector(".highscores-link");
+// show high scores link
 highScoresLink.addEventListener("click", (showHighScores));
 
+// makes the high scores element visible and hides the questions element. Displays the high scores
 function showHighScores () {
     time.remove();
     questionEl.remove();
@@ -191,7 +204,7 @@ function showHighScores () {
         }
 }
 
-var clearEl = document.querySelector("#clearscores");
+// clear local storage
 clearEl.addEventListener("click", function () {
     localStorage.clear();
     location.reload();
