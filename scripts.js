@@ -83,7 +83,7 @@ function checkAnswer(event) {
 
     var selection = event.target;
     var selectionDiv = document.createElement("div");
-    selectionDiv.setAttribute("id", selectionDiv);
+    selectionDiv.setAttribute("id", "selectionDiv");
     selectionDiv.innerHTML = ""
     if (selection.matches("li")) {
         if (selection.textContent === quiz[qIndex].answer) {
@@ -96,15 +96,17 @@ function checkAnswer(event) {
         qIndex++;
         if (qIndex >= quiz.length) {
             endQuiz();
+            selectionDiv.textContent = "Thanks for playing!";
             
         } else {
             createQuizQuestions(qIndex);
         } 
         questionEl.appendChild(selectionDiv);
+
     }
 
 var highScores = document.querySelector("#highscores");
-highScores.style.visibility = "hidden";
+highScores.style.display = "none";
 
 function endQuiz() {
     clearInterval(timerInterval);
@@ -121,12 +123,13 @@ function endQuiz() {
     initialsInput.setAttribute = ("id", "initials");
     
     questionEl.appendChild(initialsInput);
-    
+    var linebreak = document.createElement("br");
+    questionEl.appendChild(linebreak);
 
     var submitButton = document.createElement("button");
     submitButton.textContent = "Submit";
     submitButton.setAttribute("id", "submit")
-    questionEl.appendChild(submitButton);
+    questionEl.append(submitButton);
     
 
     submitButton.addEventListener("click", function getScores () {
@@ -134,6 +137,7 @@ function endQuiz() {
         showHighScores();
         var initials = initialsInput.value;
         console.log(initials);
+        
         
         var userData = {
                 initials: initials,
@@ -157,19 +161,19 @@ function endQuiz() {
 
         for (i =0; i < scoreList.length; i++) {
             var newLine = document.createElement("li");
-            newLine.textContent = "Initials: " + scoreList[i].initials + " " + "Score: " + scoreList[i].score;
+            newLine.innerHTML = "Initials: " + scoreList[i].initials + "<br />" + "Score: " + scoreList[i].score;
             highscores.appendChild(newLine);
             }
         });
 }
 
-
 var highScoresLink = document.querySelector(".highscores-link");
 highScoresLink.addEventListener("click", (showHighScores));
 
 function showHighScores () {
+    time.remove();
     questionEl.remove();
-    highScores.style.visibility = "visible";
+    highScores.style.display = "block";
     highScoresLink.remove();
     var scoreList = localStorage.getItem("scoreList");
         
@@ -188,6 +192,7 @@ function showHighScores () {
 }
 
 var clearEl = document.querySelector("#clearscores");
-highScoresLink.addEventListener("click", function () {
-
-})
+clearEl.addEventListener("click", function () {
+    localStorage.clear();
+    location.reload();
+});

@@ -14,13 +14,16 @@ input {
     width: 50%;
     border: 1px solid lightgray;
 }
+ul {
 
+    padding: 0px;
+}
 li {
     background-color: orange;
     margin-top: 10px;
     padding: 10px;
-    width: 80%;
     color: white;
+    list-style: none;
 }
 
 .container {
@@ -29,24 +32,32 @@ li {
     top: 10%;
     width: 100%;
     height: auto;
-    border: 1px solid purple;
+    border: 3px solid black;
 
 }
-#questions {
-    margin: 20px;
+#questions, #scoreslist {
+    margin: auto;
+    text-align: center;
+
+}
+
+#selectionDiv {
+    border-top: 2px solid red;
+    margin-top: 20px;
+    font-size: 16px;
+    color: grey;
 }
 
 #submit {
     background-color: orange;
-    margin-left: 33%;
-    padding: 15px 32px;
+    margin-top: 20px;
+    padding: 15px 15px;
     font-size: 20px;
     color: white;
 }
 
-#selectionDiv {
-    margin-top: 20px;
-    border-top: 5px solid orange;
-    font-size: 8px;
-    color: grey;
+#clearscores, #reload {
+    margin-top: 30px;
+    background-color: lightcoral;
 }
+
